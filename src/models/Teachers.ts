@@ -2,7 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 /** document */
 export interface ITeachers extends Document {
-    name: string,
+    fname: string,
+    sname: string,
     specialized: Array<{
       code: string;
       description: string;
@@ -13,7 +14,8 @@ export interface ITeachers extends Document {
 
  /** schema */
 const TeachersSchema: Schema = new Schema({
-    name: { type: String, required: true },
+  fname: { type: String, required: true },
+  sname: { type: String, required: true },
     specialized: [
       {
         code: { type: String, required: true },

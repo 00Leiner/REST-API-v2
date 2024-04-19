@@ -4,11 +4,12 @@ import mongoose, { Types } from "mongoose";
 
 export async function createTeacher(req: Request, res: Response) {
   try {
-    const { name, specialized } = req.body;
+    const { fname, sname, specialized } = req.body;
     
     const teacher = new Teachers({
       _id: new mongoose.Types.ObjectId(),
-      name,
+      fname,
+      sname,
       specialized
     });
 
@@ -134,7 +135,7 @@ export async function updateCourse(req: Request, res: Response) {
       );
   
       if (updatedTeacher) {
-        res.status(200).json({ specialized: updatedTeacher.specialized });
+        res.status(200).json({ specialized: updatedTeacher });
       } else {
         res.status(404).json({ message: 'Teacher or course not found' });
       }
