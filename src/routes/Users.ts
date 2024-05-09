@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, readUser, readAllUsers, updateUser, deleteUser, readUsernamePassword } from "../controllers/Users";
+import { createUser, readUser, readAllUsers, updateUser, deleteUser, loginUser } from "../controllers/Users";
 
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router.get('/get/:userID', readUser);
 router.get('/get/', readAllUsers);
 router.put('/update/:userID', updateUser);
 router.delete('/delete/:userID', deleteUser);
-router.get('/login', readUsernamePassword);
+router.get('/login', loginUser);
 
 
 export default router;

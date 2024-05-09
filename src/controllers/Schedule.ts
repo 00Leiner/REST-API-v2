@@ -8,7 +8,6 @@ export async function createSchedule(req: Request, res: Response) {
     
     const schedule = new Schedule({
       _id: new mongoose.Types.ObjectId(),
-      options,
       programs
     });
 
@@ -45,106 +44,106 @@ export async function deleteAllOptions(req: Request, res: Response){
   }
 }
 
-export async function readAllPrograms(req: Request, res: Response) {
-  try {
-    const scheduleID = req.params.scheduleID;
-    const schedule = await Schedule.findById(scheduleID).select('-__v');
+// export async function readAllPrograms(req: Request, res: Response) {
+//   try {
+//     const scheduleID = req.params.scheduleID;
+//     const schedule = await Schedule.findById(scheduleID).select('-__v');
       
-    schedule
-      ? res.status(200).json({ schedule }) 
-      : res.status(404).json({ message: "Not found" });
+//     schedule
+//       ? res.status(200).json({ schedule }) 
+//       : res.status(404).json({ message: "Not found" });
       
-  } catch (error) {
-    res.status(500).json({ error });
-    res.render('error', { error: error });
-  }
-}; 
+//   } catch (error) {
+//     res.status(500).json({ error });
+//     res.render('error', { error: error });
+//   }
+// }; 
 
-export async function readProgram(req: Request, res: Response) {
-  try {
-    const scheduleID = req.params.scheduleID;
-    const programID = req.params.programID; // Assuming you have a programID parameter
+// export async function readProgram(req: Request, res: Response) {
+//   try {
+//     const scheduleID = req.params.scheduleID;
+//     const programID = req.params.programID; // Assuming you have a programID parameter
 
-    // Using findById to retrieve a specific schedule by ID
-    const schedule = await Schedule.findById(scheduleID);
+//     // Using findById to retrieve a specific schedule by ID
+//     const schedule = await Schedule.findById(scheduleID);
 
-    if (!schedule) {
-      return res.status(404).json({ message: 'Schedule not found' });
-    }
+//     if (!schedule) {
+//       return res.status(404).json({ message: 'Schedule not found' });
+//     }
 
-    // Find the specific program within the programs array
-    const program = schedule.programs.find((p) => p._id.toString() === programID);
+//     // Find the specific program within the programs array
+//     const program = schedule.programs.find((p) => p._id.toString() === programID);
 
-    if (!program) {
-      return res.status(404).json({ message: 'Program not found' });
-    }
+//     if (!program) {
+//       return res.status(404).json({ message: 'Program not found' });
+//     }
 
-    res.status(200).json({ program });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
+//     res.status(200).json({ program });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// }
 
-export async function readAllSched(req: Request, res: Response) {
-  try {
-    const scheduleID = req.params.scheduleID;
-    const programID = req.params.programID; // Assuming you have a unique identifier for programs
+// export async function readAllSched(req: Request, res: Response) {
+//   try {
+//     const scheduleID = req.params.scheduleID;
+//     const programID = req.params.programID; // Assuming you have a unique identifier for programs
 
-    // Using findById to retrieve a specific schedule by ID
-    const schedule = await Schedule.findById(scheduleID);
+//     // Using findById to retrieve a specific schedule by ID
+//     const schedule = await Schedule.findById(scheduleID);
 
-    if (!schedule) {
-      return res.status(404).json({ message: 'Schedule not found' });
-    }
+//     if (!schedule) {
+//       return res.status(404).json({ message: 'Schedule not found' });
+//     }
 
-    // Find the program within the programs array based on a unique identifier (e.g., programID)
-    const program = schedule.programs.find(program => program._id === programID);
+//     // Find the program within the programs array based on a unique identifier (e.g., programID)
+//     const program = schedule.programs.find(program => program._id === programID);
 
-    if (!program) {
-      return res.status(404).json({ message: 'Program not found' });
-    }
+//     if (!program) {
+//       return res.status(404).json({ message: 'Program not found' });
+//     }
 
-    // Extract the sched array from the found program
-    const schedArray = program;
+//     // Extract the sched array from the found program
+//     const schedArray = program;
 
-    res.status(200).json({ schedArray });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
+//     res.status(200).json({ schedArray });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// }
 
-export async function readSched(req: Request, res: Response) {
-  try {
-    const scheduleID = req.params.scheduleID;
-    const programID = req.params.programID; // Assuming you have a unique identifier for programs
-    const schedID = req.params.schedID; // Assuming you have a unique identifier for sched within a program
+// export async function readSched(req: Request, res: Response) {
+//   try {
+//     const scheduleID = req.params.scheduleID;
+//     const programID = req.params.programID; // Assuming you have a unique identifier for programs
+//     const schedID = req.params.schedID; // Assuming you have a unique identifier for sched within a program
 
-    // Using findById to retrieve a specific schedule by ID
-    const schedule = await Schedule.findById(scheduleID);
+//     // Using findById to retrieve a specific schedule by ID
+//     const schedule = await Schedule.findById(scheduleID);
 
-    if (!schedule) {
-      return res.status(404).json({ message: 'Schedule not found' });
-    }
+//     if (!schedule) {
+//       return res.status(404).json({ message: 'Schedule not found' });
+//     }
 
-    // Find the program within the programs array based on a unique identifier (e.g., programID)
-    const program = schedule.programs.find((program) => program._id.toString() === programID);
+//     // Find the program within the programs array based on a unique identifier (e.g., programID)
+//     const program = schedule.programs.find((program) => program._id.toString() === programID);
 
-    if (!program) {
-      return res.status(404).json({ message: 'Program not found' });
-    }
+//     if (!program) {
+//       return res.status(404).json({ message: 'Program not found' });
+//     }
 
-    // Find the specific sched within the sched array of the program
-    const sched = program.sched.find((sched) => sched._id.toString() === schedID);
+//     // Find the specific sched within the sched array of the program
+//     const sched = program.sched.find((sched) => sched._id.toString() === schedID);
 
-    if (!sched) {
-      return res.status(404).json({ message: 'Specific sched not found' });
-    }
+//     if (!sched) {
+//       return res.status(404).json({ message: 'Specific sched not found' });
+//     }
 
-    res.status(200).json({ sched });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
+//     res.status(200).json({ sched });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// }

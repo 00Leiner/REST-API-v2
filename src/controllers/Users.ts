@@ -79,22 +79,27 @@ export async function deleteUser(req: Request, res: Response) {
   }
 };
 
-export async function readUsernamePassword(req: Request, res: Response) {
-  const { username, password } = req.query;
+// Login route handler
+export async function loginUser(req: Request, res: Response) {
+  try {
+    let { username, password } = req.query;
 
-  // Check if username and password are provided
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
+    // Convert username to string
+    username = String(username);
+
+    // Find the user by username
+    const user = await Users.findOne({ username });
+
+    // If user not found or password doesn't match, return an error
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    // If authentication is successful, return user information
+    return res.status(200).json({ user });
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  // Check if the user exists in the database and credentials match
-  const user = await Users.find((u: { id: number; username: string; password: string }) => u.username === username && u.password === password);
-
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid username or password' });
-  }
-
-  // If user exists and credentials match, return success message
-  return res.status(200).json({ message: 'Login successful', user });
-};
-
+}
